@@ -3,6 +3,7 @@
 
 ## Task 1: Setup Knowledge Base
 
+
 ### parse media wiki
 
 start python environment
@@ -22,6 +23,8 @@ pip install -qU git+https://github.com/gdedrouas/python-mwxml@xml_format_0.11
 pip install -qU mwparserfromhell
 pip install -qU langchain
 pip install -qU langchain-community
+pip install -qU langchain-huggingface
+pip install -qU langchain-chroma
 ```
 
 ---
@@ -30,76 +33,68 @@ pip install -qU langchain-community
 
 1) Extracts boss pages from Hollow Knight wiki XML dump and converts wikitext to markdown.
 
-Usage:
+
+Get help:
+
 ```bash
-usage: extract_bosses.py [-h] [xml_file] [output_dir]
+python extract_bosses.py -h
+```
 
-Extract all boss pages from Hollow Knight wiki XML dump. Converts wikitext to clean markdown format.
+Usage:
 
-positional arguments:
-  xml_file    Path to the XML dump file (default: knowledge_base/source/hollowknight_pages_current.xml)
-  output_dir  Output directory for extracted boss markdown files (default: knowledge_base/bosses)
-
-options:
-  -h, --help  show this help message and exit
-
-Example: python extract_bosses.py input.xml output_dir
+```bash
+python extract_bosses.py
 ```
 
 2) Generate boss name mappings by using `generate_mapping.py` script:
 
+Get help:
+
 ```bash
-$ python generate_mapping.py -h
-usage: generate_mapping.py [-h] [--input-dir INPUT_DIR] [--output OUTPUT]
+python generate_mapping.py -h
+```
 
-Generate JSON mapping from markdown H1 headings to fake names
+Usage:
 
-options:
-  -h, --help            show this help message and exit
-  --input-dir INPUT_DIR
-                        Directory with markdown files
-  --output OUTPUT       Output JSON file
+```bash
+python generate_mapping.py
 ```
 
 ---
 
 ## Task 3: Vector Index for Knowledge Base
 
-### Embedding Model
-- **Model**: `sentence-transformers/all-MiniLM-L6-v2`
-- **Repository**: https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2
-- **Embedding Size**: 384 dimensions
-- **MTEB Score**: ~56.2
+Get help:
 
-### Knowledge Base
-- **Source**: `knowledge_base/bosses/` - 47 Hollow Knight boss pages
-
-### Index Statistics
-- **Total Documents**: 47
-- **Total Chunks**: 112
-- **Index Location**: `chroma_db/`
-- **Index Size**: 2.4 MB
-
-### Generation Time
-- ~4.3 seconds (CPU-only)
-
-### Test Results
-The index was tested with 3 queries and returned relevant chunks.
-
-#### Query 1: "How to defeat False Knight?"
-- Returns chunks from False Knight page with attack patterns
-
-#### Query 2: "What are Hornet's attacks?"
-- Returns chunks from both Hornet Protector and Hornet Sentinel
-
-#### Query 3: "Describe Soul Master's abilities"
-- Returns chunks from Soul Master and Soul Tyrant pages
-
-### Usage
 ```bash
-python build_index.py
+python indexing.py -h
+python indexing.py build -h
+python indexing.py query -h
 ```
 
-### Files
-- `build_index.py` - Index building script
-- `chroma_db/` - Persisted ChromaDB index
+### Build Index
+```bash
+python indexing.py build --input-dir knowledge_base/bosses --output-dir chroma_db
+```
+
+### Query Index
+```bash
+python indexing.py query "How to defeat John Snow?" --top-k 5
+```
+
+### Interactive Python Inspection
+```python
+from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_chroma import Chroma
+
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
+db = Chroma(persist_directory="chroma_db", embedding_function=embeddings)
+
+# Search
+results = db.similarity_search("How to defeat Hornet?", k=3)
+for doc in results:
+    print(doc.metadata["title"])
+    print(doc.page_content[:200])
+```
