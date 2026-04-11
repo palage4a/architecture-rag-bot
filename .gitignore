@@ -1,3 +1,4 @@
 *.pyc
 rag-env
 tmp
+chroma_db

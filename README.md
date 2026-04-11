@@ -1,7 +1,9 @@
 # architecture-rag-bot
 
 
-## parse media wiki
+## Task 1: Setup Knowledge Base
+
+### parse media wiki
 
 start python environment
 
