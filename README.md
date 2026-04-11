@@ -28,18 +28,25 @@ pip install -qU langchain-community
 
 ## Task 2: Distill Knowledge Base
 
-Extracts boss pages from Hollow Knight wiki XML dump and converts wikitext to markdown.
+1) Extracts boss pages from Hollow Knight wiki XML dump and converts wikitext to markdown.
 
 Usage:
 ```bash
-python extract_bosses.py [xml_file] [output_dir]
+usage: extract_bosses.py [-h] [xml_file] [output_dir]
+
+Extract all boss pages from Hollow Knight wiki XML dump. Converts wikitext to clean markdown format.
+
+positional arguments:
+  xml_file    Path to the XML dump file (default: knowledge_base/source/hollowknight_pages_current.xml)
+  output_dir  Output directory for extracted boss markdown files (default: knowledge_base/bosses)
+
+options:
+  -h, --help  show this help message and exit
+
+Example: python extract_bosses.py input.xml output_dir
 ```
 
-- Input: `knowledge_base/source/hollowknight_pages_current.xml`
-- Output: `knowledge_base/bosses/` - 47 boss markdown files
-
-
-Generate boss name mappings by using `generate_mapping.py` script:
+2) Generate boss name mappings by using `generate_mapping.py` script:
 
 ```bash
 $ python generate_mapping.py -h
