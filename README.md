@@ -1,5 +1,23 @@
 # architecture-rag-bot
 
+## TL;DR
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+python extract_bosses.py
+
+python generate_mapping.py
+
+python rename_bosses.py
+
+python indexing.py build
+
+python indexing.py query "Who the main boss?"
+```
+
 ## Project setup
 
 ```
