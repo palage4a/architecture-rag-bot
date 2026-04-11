@@ -36,6 +36,22 @@ python extract_bosses.py [xml_file] [output_dir]
 - Input: `knowledge_base/source/hollowknight_pages_current.xml`
 - Output: `knowledge_base/bosses/` - 47 boss markdown files
 
+
+Generate boss name mappings by using `generate_mapping.py` script:
+
+```bash
+$ python generate_mapping.py -h
+usage: generate_mapping.py [-h] [--input-dir INPUT_DIR] [--output OUTPUT]
+
+Generate JSON mapping from markdown H1 headings to fake names
+
+options:
+  -h, --help            show this help message and exit
+  --input-dir INPUT_DIR
+                        Directory with markdown files
+  --output OUTPUT       Output JSON file
+```
+
 ---
 
 ## Task 3: Vector Index for Knowledge Base
