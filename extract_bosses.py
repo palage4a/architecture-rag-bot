@@ -409,7 +409,7 @@ def extract_boss_pages(xml_path, output_dir=None):
 
     if output_dir is None:
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        output_dir = os.path.join(script_dir, "knowledge_base", "bosses")
+        output_dir = os.path.join(script_dir, "knowledge_base")
 
     os.makedirs(output_dir, exist_ok=True)
     print(f"Output directory: {output_dir}")
@@ -476,14 +476,14 @@ if __name__ == "__main__":
     parser.add_argument(
         "xml_file",
         nargs="?",
-        default="knowledge_base/source/hollowknight_pages_current.xml",
-        help="Path to the XML dump file (default: knowledge_base/source/hollowknight_pages_current.xml)"
+        default="source/hollowknight_pages_current.xml",
+        help="Path to the XML dump file (default: source/hollowknight_pages_current.xml)"
     )
     parser.add_argument(
         "output_dir",
         nargs="?",
-        default='knowledge_base/bosses',
-        help="Output directory for extracted boss markdown files (default: knowledge_base/bosses)"
+        default='knowledge_base',
+        help="Output directory for extracted boss markdown files (default: knowledge_base)"
     )
 
     args = parser.parse_args()

@@ -1,5 +1,5 @@
 *.pyc
-rag-env
+.venv
 tmp
 chroma_db
-knowledge_base/source
+knowledge_base

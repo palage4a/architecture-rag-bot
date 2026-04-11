@@ -9,7 +9,7 @@ import sys
 def main():
     parser = argparse.ArgumentParser(description="Rename boss files and replace boss names in content")
     parser.add_argument("-m", "--mapping", default="mapping.json", help="Path to mapping JSON file")
-    parser.add_argument("-d", "--directory", default="knowledge_base/bosses/", help="Target directory")
+    parser.add_argument("-d", "--directory", default="knowledge_base/", help="Target directory")
     parser.add_argument("--backup", action="store_true", help="Create a backup of the directory before making changes")
     args = parser.parse_args()
 

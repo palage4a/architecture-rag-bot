@@ -8,7 +8,7 @@ fake = Faker()
 
 def main():
     parser = argparse.ArgumentParser(description="Generate JSON mapping from markdown H1 headings to fake names")
-    parser.add_argument("--input-dir", default="knowledge_base/bosses/", help="Directory with markdown files")
+    parser.add_argument("--input-dir", default="knowledge_base/", help="Directory with markdown files")
     parser.add_argument("--output", default="mapping.json", help="Output JSON file")
     args = parser.parse_args()
 

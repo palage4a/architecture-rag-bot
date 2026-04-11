@@ -1,3 +1,0 @@
-# Kari Cunningham
-
-#REDIRECT Collector

@@ -1,31 +1,26 @@
 # architecture-rag-bot
 
+## Project setup
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Instrall dependencies manually
+pip install -U langchain \
+    langchain-community \
+    langchain-huggingface \
+    langchain-chroma \
+    faker \
+    sentence-transformers
+
+# Or use requirements.txt
+pip install -r requirements.txt
+```
 
 ## Task 1: Setup Knowledge Base
 
 
-### parse media wiki
-
-start python environment
-
-```
-python3 -m venv rag-env
-source rag-env/bin/activate
-```
-
-get dependencies:
-
-```
-# mediawiki-utilities supports XML schema 0.11 in unmerged branches
-pip install -qU git+https://github.com/mediawiki-utilities/python-mwtypes@updates_schema_0.11
-# mediawiki-utilities mwxml has a bug, fix PR pending
-pip install -qU git+https://github.com/gdedrouas/python-mwxml@xml_format_0.11
-pip install -qU mwparserfromhell
-pip install -qU langchain
-pip install -qU langchain-community
-pip install -qU langchain-huggingface
-pip install -qU langchain-chroma
-```
 
 ---
 
@@ -34,55 +29,40 @@ pip install -qU langchain-chroma
 1) Extracts boss pages from Hollow Knight wiki XML dump and converts wikitext to markdown.
 
 
-Get help:
-
-```bash
-python extract_bosses.py -h
-```
-
-Usage:
-
 ```bash
 python extract_bosses.py
 ```
 
-2) Generate boss name mappings by using `generate_mapping.py` script:
-
-Get help:
-
-```bash
-python generate_mapping.py -h
-```
-
-Usage:
+2) Generate boss name mappings:
 
 ```bash
 python generate_mapping.py
+```
+
+3) Rename bosses in all files from knowledge base:
+
+
+```bash
+python rename_bosses.py
 ```
 
 ---
 
 ## Task 3: Vector Index for Knowledge Base
 
-Get help:
+1) Build index
 
 ```bash
-python indexing.py -h
-python indexing.py build -h
-python indexing.py query -h
+python indexing.py build
 ```
 
-### Build Index
+2) Ask index
 ```bash
-python indexing.py build --input-dir knowledge_base/bosses --output-dir chroma_db
-```
-
-### Query Index
-```bash
-python indexing.py query "How to defeat John Snow?" --top-k 5
+python indexing.py query "Who the main boss?"
 ```
 
 ### Interactive Python Inspection
+
 ```python
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_chroma import Chroma

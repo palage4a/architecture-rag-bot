@@ -10,7 +10,7 @@ from langchain_core.documents import Document
 
 
 DEFAULT_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
-DEFAULT_KNOWLEDGE_BASE_DIR = "knowledge_base/bosses"
+DEFAULT_KNOWLEDGE_BASE_DIR = "knowledge_base"
 DEFAULT_CHROMA_DIR = "chroma_db"
 DEFAULT_CHUNK_SIZE = 500
 DEFAULT_CHUNK_OVERLAP = 50
@@ -95,9 +95,9 @@ def create_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Build and query vector index for knowledge base"
     )
-    
+
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
-    
+
     build_parser = subparsers.add_parser("build", help="Build vector index")
     build_parser.add_argument(
         "--input-dir", "-i",
@@ -131,7 +131,7 @@ def create_parser() -> argparse.ArgumentParser:
         default="cpu",
         help="Device for embeddings (default: cpu)"
     )
-    
+
     query_parser = subparsers.add_parser("query", help="Query existing index")
     query_parser.add_argument(
         "query",
@@ -153,36 +153,36 @@ def create_parser() -> argparse.ArgumentParser:
         default=DEFAULT_TOP_K,
         help=f"Number of results (default: {DEFAULT_TOP_K})"
     )
-    
+
     return parser
 
 
 def main():
     parser = create_parser()
     args = parser.parse_args()
-    
+
     if args.command == "build":
         docs = load_documents(args.input_dir)
         if not docs:
             print(f"No documents found in {args.input_dir}")
             return
-        
+
         chunks = split_documents(docs, args.chunk_size, args.chunk_overlap)
         embeddings = create_embeddings(args.model, args.device)
         vectorstore = build_index(chunks, embeddings, args.output_dir)
-        
+
         print("\n" + "=" * 60)
         print("Index built successfully!")
         print(f"   Location: {args.output_dir}")
         print(f"   Model: {args.model}")
         print(f"   Total chunks: {len(chunks)}")
         print("=" * 60)
-        
+
     elif args.command == "query":
         embeddings = create_embeddings(args.model)
         vectorstore = load_index(embeddings, args.index_dir)
         search_index(vectorstore, args.query, args.top_k)
-        
+
     else:
         parser.print_help()
 
