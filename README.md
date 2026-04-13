@@ -16,6 +16,11 @@ python rename_bosses.py
 python indexing.py build
 
 python indexing.py query "Who the main boss?"
+
+# Set OPENAI_API_KEY and OPENAI_API_BASE_URL
+source .env
+
+python rag_bot.py
 ```
 
 ## Project setup
@@ -29,6 +34,7 @@ pip install -U langchain \
     langchain-community \
     langchain-huggingface \
     langchain-chroma \
+    langchain-openai \
     faker \
     sentence-transformers
 
