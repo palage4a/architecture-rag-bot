@@ -17,7 +17,8 @@ python indexing.py build
 
 python indexing.py query "Who the main boss?"
 
-# Set OPENAI_API_KEY and OPENAI_API_BASE_URL
+# Set OPENAI_API_KEY and OPENAI_API_BASE_URL.
+# Optionally, RAG_BOT_MODEL could be set.
 source .env
 
 python rag_bot.py
