@@ -136,7 +136,7 @@ These queries should return legitimate answers from the knowledge base.
 
 ---
 
-## Security Findings
+## Security Findings and Conslusions
 
 ### Vulnerable Scenarios
 

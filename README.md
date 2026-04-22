@@ -98,3 +98,7 @@ source .env
 
 python rag_bot.py
 ```
+
+# Task 5: Security
+
+Described in [SECUITY.md](./SECURITY.md).
