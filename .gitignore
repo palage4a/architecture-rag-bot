@@ -1,0 +1,7 @@
+*.pyc
+.venv
+.env
+tmp
+chroma_db
+knowledge_base
+mapping.json
